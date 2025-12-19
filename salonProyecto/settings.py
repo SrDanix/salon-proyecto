@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import pymysql
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9vt9(ki1k5om4r3q89^@1#7ima@6py@$rib-djfm#m^2&d9+!!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -133,7 +134,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = ('whitenoise.storage.CompressedManifestStaticFilesStorage')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
@@ -183,4 +184,3 @@ AXES_RESET_ON_SUCCESS = True    # se resetea si login es correcto
 AXES_LOCKOUT_CALLABLE = None
 
 
-ALLOWED_HOSTS = ['*']
