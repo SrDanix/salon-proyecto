@@ -1,0 +1,355 @@
+/* ====== THEME: BLACK & GOLD (Luxury) ====== */
+:root{
+  --lux-bg: #0b0c10;
+  --lux-panel: rgba(255,255,255,0.04);
+  --lux-panel-2: rgba(255,255,255,0.06);
+  --lux-line: rgba(255,255,255,0.10);
+  --lux-text: #f4f4f5;
+  --lux-muted: rgba(244,244,245,0.70);
+
+  --lux-gold: #d4af37;
+  --lux-gold-2: #f3d36b;
+
+  --lux-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  --lux-radius: 18px;
+}
+
+.lux-body{
+  background:
+    radial-gradient(1100px 650px at 12% 8%, rgba(212,175,55,0.14), transparent 55%),
+    radial-gradient(900px 600px at 86% 18%, rgba(243,211,107,0.10), transparent 60%),
+    linear-gradient(180deg, #07070a 0%, var(--lux-bg) 55%, #07070a 100%);
+  color: var(--lux-text);
+  min-height: 100vh;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+}
+
+
+
+
+.lux-nav{
+  background: rgba(10,10,12,0.82) !important;
+  border-bottom: 1px solid var(--lux-line);
+  backdrop-filter: blur(16px);
+}
+
+.lux-logo{
+  height: 54px;
+  width: 54px;
+  border-radius: 14px;
+  object-fit: cover;
+  background: #fff;
+  border: 1px solid var(--lux-line);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.lux-brand-title{
+  font-weight: 800;
+  letter-spacing: .5px;
+  color: var(--lux-text);
+}
+
+.lux-brand-sub{
+  color: var(--lux-muted);
+}
+
+.lux-link{
+  color: var(--lux-muted) !important;
+  border-radius: 12px;
+  padding: 10px 12px !important;
+  transition: .18s ease;
+}
+
+.lux-link:hover{
+  color: var(--lux-text) !important;
+  background: rgba(255,255,255,0.06);
+}
+
+.lux-toggler{
+  border: 1px solid var(--lux-line) !important;
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+
+.lux-btn{
+  background: linear-gradient(180deg, rgba(212,175,55,0.35), rgba(212,175,55,0.18));
+  border: 1px solid rgba(212,175,55,0.55);
+  color: var(--lux-text);
+  font-weight: 800;
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  transition: .18s ease;
+}
+
+.lux-btn:hover{
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+  color: var(--lux-text);
+}
+
+.lux-btn-outline{
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--lux-line);
+  color: var(--lux-text);
+  font-weight: 700;
+  border-radius: 14px;
+  padding: 10px 14px;
+  transition: .18s ease;
+}
+
+.lux-btn-outline:hover{
+  background: rgba(255,255,255,0.10);
+  transform: translateY(-1px);
+  color: var(--lux-text);
+}
+
+.lux-hero{
+  position: relative;
+  border-bottom: 1px solid var(--lux-line);
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.03),
+    transparent
+  );
+  z-index: 1;
+}
+.lux-hero .container{
+  position: relative;
+  z-index: 2;
+}
+
+
+.lux-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(212,175,55,0.10);
+  border: 1px solid rgba(212,175,55,0.22);
+  color: var(--lux-gold-2);
+  font-weight: 800;
+}
+
+.lux-h1{
+  font-size: clamp(30px, 3.5vw, 50px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+
+.lux-gold{
+  background: linear-gradient(90deg, var(--lux-gold), var(--lux-gold-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lux-lead{
+  color: var(--lux-muted);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
+.lux-card{
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--lux-line);
+  border-radius: var(--lux-radius);
+  box-shadow: var(--lux-shadow);
+}
+
+.lux-glow{
+  position: relative;
+  overflow: hidden;
+}
+.lux-glow::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background: radial-gradient(450px 260px at 0% 0%, rgba(212,175,55,0.18), transparent 60%);
+  pointer-events:none;
+}
+
+.lux-hero-logo{
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: #fff;
+  object-fit: contain;
+  border: 1px solid var(--lux-line);
+}
+
+.lux-card-title{
+  font-weight: 900;
+  letter-spacing: .3px;
+}
+
+.lux-hr{
+  border-color: rgba(255,255,255,0.12);
+}
+
+.lux-stat{
+  font-weight: 900;
+  color: var(--lux-gold-2);
+}
+
+.lux-muted{
+  color: var(--lux-muted);
+}
+
+.lux-footer{
+  border-top: 1px solid var(--lux-line);
+  background: rgba(10,10,12,0.82);
+  backdrop-filter: blur(16px);
+}
+
+.lux-footer-title{
+  font-weight: 900;
+}
+
+/* Make default Bootstrap container spacing feel premium */
+main.container{
+  background: transparent;
+}
+
+/* Optional: cards/buttons in your pages look premium if you add these classes */
+.lux-surface{
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--lux-line);
+  border-radius: var(--lux-radius);
+  box-shadow: var(--lux-shadow);
+}
+
+/* ===========================
+   FOOTER LUX
+=========================== */
+
+.lux-footer{
+    background: linear-gradient(180deg, #0a0a0a, #000);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: #ddd;
+}
+
+.lux-footer-brand{
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #f3d36b;
+    letter-spacing: 1px;
+}
+
+.lux-footer-title{
+    font-weight: 800;
+    color: #f3d36b;
+    margin-bottom: 8px;
+}
+
+.lux-footer-text{
+    font-size: .9rem;
+    opacity: .85;
+    line-height: 1.6;
+}
+
+.lux-footer-link{
+    display: inline-block;
+    color: #f3d36b;
+    font-size: .9rem;
+    text-decoration: none;
+    margin-top: 4px;
+}
+
+.lux-footer-link:hover{
+    text-decoration: underline;
+}
+
+.lux-payments span{
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: .85rem;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+
+.lux-social a{
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 6px;
+    font-size: .9rem;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.lux-social a:hover{
+    color: #f3d36b;
+}
+
+.lux-footer-hr{
+    border-color: rgba(255,255,255,0.08);
+}
+
+.lux-footer-copy{
+    font-size: .8rem;
+    opacity: .6;
+}
+
+/* ===========================
+   ICONOS REDES SOCIALES
+=========================== */
+
+.lux-social-icons{
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.lux-social-icons a{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+    color: #f3d36b;
+    font-size: 1.2rem;
+    transition: all .25s ease;
+    text-decoration: none;
+}
+
+.lux-social-icons a:hover{
+    background: linear-gradient(135deg, #c9a24d, #f2d27c);
+    color: #111;
+    transform: translateY(-3px);
+}
+
+/* ===========================
+   MEDIOS DE PAGO
+=========================== */
+
+.lux-payment-icons{
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.lux-payment-icons i{
+    font-size: 2rem;
+    color: #f3d36b;
+    background: rgba(255,255,255,0.06);
+    padding: 10px 14px;
+    border-radius: 12px;
+    transition: all .25s ease;
+}
+
+.lux-payment-icons i:hover{
+    background: linear-gradient(135deg, #c9a24d, #f2d27c);
+    color: #111;
+    transform: translateY(-3px);
+}
