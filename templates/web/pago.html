@@ -1,0 +1,211 @@
+{% extends "web/base.html" %}
+{% load formatos %}
+
+{% block title %}Pago{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center mt-5">
+  <div class="card pago-card shadow-lg">
+
+    <div class="card-header text-center">
+      <h3 class="mb-0">Confirmar Pago</h3>
+      <p class="mb-0 pago-sub">Revisa tu detalle antes de pagar con tarjeta.</p>
+    </div>
+
+    <div class="card-body">
+
+      {% if productos_carrito %}
+
+      <div class="table-responsive">
+        <table class="table pago-table align-middle mb-3">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="text-center">Cantidad</th>
+              <th class="text-end">Subtotal</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in productos_carrito %}
+            <tr>
+              <td class="fw-semibold">{{ item.producto.nombre }}</td>
+              <td class="text-center">{{ item.cantidad }}</td>
+              <td class="text-end">${{ item.subtotal|precio_cl }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pago-total">
+        <span>Total</span>
+        <span class="total-num">$ {{ total|precio_cl }}</span>
+      </div>
+
+      <!-- Stripe Checkout (NO TOCAR) -->
+      <form action="" method="POST" class="d-none">
+        {% csrf_token %}
+        <script
+          src="https://js.stripe.com/v3/"
+          class="stripe-button"
+          data-key="{{ stripe_public_key }}"
+          data-session-id="{{ checkout_session_id }}">
+        </script>
+      </form>
+
+      <button id="checkout-button" class="btn btn-gold w-100 mt-3">
+        💳 Pagar con tarjeta
+      </button>
+
+      <a href="{% url 'compra' %}" class="btn btn-outline-gold w-100 mt-2">
+        Cancelar compra
+      </a>
+
+      <script>
+        const stripe = Stripe("{{ stripe_public_key }}");
+        document.getElementById("checkout-button").addEventListener("click", function () {
+          stripe.redirectToCheckout({
+            sessionId: "{{ checkout_session_id }}"
+          });
+        });
+      </script>
+
+      {% else %}
+        <p class="text-center text-muted mb-0">Tu carrito está vacío.</p>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* ===== PAGO LUX (NEGRO / DORADO) ===== */
+.pago-card{
+  max-width: 720px;
+  width: 100%;
+  background: #111;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pago-card .card-header{
+  background: linear-gradient(135deg, #c9a24d, #f2d27c);
+  color: #111;
+  border: none;
+  padding: 18px 18px 14px 18px;
+}
+
+.pago-sub{
+  font-size: 13px;
+  opacity: .85;
+  margin-top: 4px;
+}
+
+.pago-table{
+  color: #f5f5f5;
+  border-color: rgba(255,255,255,0.10);
+}
+
+.pago-table thead th{
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 800;
+  border-color: rgba(255,255,255,0.10);
+}
+
+.pago-table tbody td{
+  border-color: rgba(255,255,255,0.08);
+}
+
+.pago-total{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-top: 6px;
+}
+
+.pago-total span{
+  font-weight: 800;
+}
+
+.total-num{
+  color: #f3d36b;
+  font-weight: 900;
+}
+
+/* Botones */
+.btn-gold{
+  background: linear-gradient(135deg, #c9a24d, #f2d27c);
+  color: #111;
+  font-weight: 900;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  transition: .25s;
+}
+
+.btn-gold:hover{
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #b8943e, #e6c267);
+}
+
+.btn-outline-gold{
+  border: 1px solid rgba(201,162,77,.6);
+  color: #f3d36b;
+  font-weight: 900;
+  background: rgba(201,162,77,0.06);
+  border-radius: 10px;
+  padding: 12px;
+  transition: .25s;
+}
+
+.btn-outline-gold:hover{
+  background: rgba(201,162,77,0.14);
+  transform: translateY(-1px);
+  color: #f3d36b;
+}
+/* ===== QUITAR FONDO BLANCO DE LA TABLA ===== */
+.pago-table{
+  background: transparent !important;
+}
+
+/* Header de la tabla */
+.pago-table thead{
+  background: transparent !important;
+}
+
+.pago-table thead th{
+  background: transparent !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Cuerpo de la tabla */
+.pago-table tbody tr{
+  background: transparent !important;
+}
+
+.pago-table tbody td{
+  background: transparent !important;
+  color: #ffffff !important;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Hover sutil luxury */
+.pago-table tbody tr:hover td{
+  background: rgba(255,255,255,0.03) !important;
+}
+
+
+
+
+</style>
+
+{% endblock %}

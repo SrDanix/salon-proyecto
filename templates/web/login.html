@@ -1,0 +1,153 @@
+{% extends "web/base.html" %}
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+
+<div class="lux-login-wrap">
+  <div class="lux-login-card">
+
+    <div class="lux-login-head">
+      <h2 class="lux-title mb-1">Iniciar Sesión</h2>
+      <p class="lux-subtitle mb-0">Accede para reservar y comprar con tu cuenta.</p>
+    </div>
+
+    <form method="POST" class="lux-form">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="username" class="lux-label">Nombre de usuario</label>
+        <input type="text" id="username" name="username" class="lux-input" required>
+      </div>
+
+      <div class="mb-2">
+        <label for="password" class="lux-label">Contraseña</label>
+        <input type="password" id="password" name="password" class="lux-input" required>
+      </div>
+
+      <button type="submit" class="btn-lux btn-lux-gold w-100 mt-2">
+        Iniciar Sesión
+      </button>
+      
+{% if messages %}
+  {% for message in messages %}
+    <div class="lux-alert mt-3">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+    </form>
+
+    <p class="lux-foot mt-3 mb-0 text-center">
+      ¿No tienes cuenta?
+      <a href="{% url 'registro' %}" class="lux-link">Regístrate aquí</a>
+    </p>
+
+  </div>
+</div>
+
+<style>
+/* ====== LOGIN LUX (NEGRO / DORADO) ====== */
+.lux-login-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: 22px 0 44px 0;
+}
+
+.lux-login-card{
+  width:100%;
+  max-width: 440px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 22px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+  padding: 22px 22px 26px 22px;
+}
+
+.lux-login-head{
+  text-align:center;
+  margin-bottom: 14px;
+}
+
+.lux-title{
+  color:#f5f5f7;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+
+.lux-subtitle{
+  color: rgba(245,245,247,.72);
+  font-size: 14px;
+}
+
+.lux-label{
+  display:block;
+  margin-bottom: 6px;
+  font-weight: 800;
+  color: rgba(245,245,247,.8);
+  font-size: 13px;
+  letter-spacing:.2px;
+}
+
+.lux-input{
+  width:100%;
+  padding:10px 12px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.14);
+  color:#f5f5f7;
+  outline:none;
+}
+
+.lux-input:focus{
+  border-color: rgba(212,175,55,.45);
+  box-shadow: 0 0 0 .2rem rgba(212,175,55,.12);
+}
+
+.btn-lux{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-weight: 900;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,0.12);
+  transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease;
+}
+.btn-lux:hover{ transform: translateY(-1px); }
+
+.btn-lux-gold{
+  color:#0b0c10;
+  background: linear-gradient(90deg, #d4af37, #f3d36b);
+  border-color: rgba(212,175,55,.55);
+}
+.btn-lux-gold:hover{ filter: brightness(1.05); }
+
+.lux-foot{
+  color: rgba(245,245,247,.65);
+  font-size: 13px;
+}
+
+.lux-link{
+  color:#f3d36b;
+  font-weight:800;
+  text-decoration:none;
+}
+.lux-link:hover{ text-decoration:underline; }
+
+.lux-alert{
+  background: rgba(180, 40, 40, 0.15);
+  border: 1px solid rgba(220, 80, 80, 0.35);
+  color: #f5c2c2;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+</style>
+
+{% endblock %}

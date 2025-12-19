@@ -1,0 +1,92 @@
+{% extends "web/base.html" %}
+{% block title %}Pago Exitoso{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card pago-exito-card shadow-lg text-center">
+
+        <div class="card-header">
+            <h3>¡Pago realizado con éxito!</h3>
+        </div>
+
+        <div class="card-body">
+            <p class="mensaje mt-2">
+                Tu reserva fue registrada correctamente.
+            </p>
+
+            <div class="detalle-reserva">
+                <p><span>Servicio:</span> {{ servicio.nombre }}</p>
+                <p><span>Fecha:</span> {{ fecha }}</p>
+                <p><span>Hora:</span> {{ hora }}</p>
+            </div>
+
+            <a href="{% url 'inicio' %}" class="btn btn-gold mt-4 w-100">
+                Volver a inicio
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+/* ===== TARJETA PRINCIPAL ===== */
+.pago-exito-card {
+    max-width: 450px;
+    width: 100%;
+    background: #111;
+    color: #f5f5f5;
+    border-radius: 14px;
+    border: none;
+}
+
+/* ===== HEADER ===== */
+.pago-exito-card .card-header {
+    background: linear-gradient(135deg, #c9a24d, #f2d27c);
+    color: #111;
+    border-radius: 14px 14px 0 0;
+    font-weight: bold;
+}
+
+/* ===== MENSAJE ===== */
+.mensaje {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* ===== DETALLES ===== */
+.detalle-reserva {
+    margin-top: 20px;
+    text-align: left;
+    background: rgba(255,255,255,0.04);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.detalle-reserva p {
+    margin-bottom: 8px;
+}
+
+.detalle-reserva span {
+    color: #c9a24d;
+    font-weight: 600;
+}
+
+/* ===== BOTÓN DORADO ===== */
+.btn-gold {
+    background: linear-gradient(135deg, #c9a24d, #f2d27c);
+    color: #111;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+    background: linear-gradient(135deg, #b8943e, #e6c267);
+    transform: translateY(-2px);
+}
+</style>
+
+{% endblock %}

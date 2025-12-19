@@ -1,0 +1,143 @@
+{% extends "web/base.html" %}
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+
+<div class="lux-edit-wrapper">
+
+  <div class="lux-edit-card">
+    <h2 class="lux-edit-title">Editar Perfil</h2>
+    <p class="lux-edit-subtitle">
+      Actualiza tu información personal
+    </p>
+
+    <form method="POST" class="lux-form">
+      {% csrf_token %}
+
+      <div class="lux-field">
+        <label>Nombre de usuario</label>
+        <input type="text"
+               name="username"
+               value="{{ user.username }}"
+               class="lux-input">
+      </div>
+
+      <div class="lux-field">
+        <label>Teléfono</label>
+        <input type="text"
+               name="telefono"
+               value="{{ user.telefono }}"
+               class="lux-input">
+      </div>
+
+      <div class="lux-field">
+        <label>Email</label>
+        <input type="email"
+               name="email"
+               value="{{ user.email }}"
+               class="lux-input">
+      </div>
+
+      <button class="btn-lux btn-lux-gold w-100 mt-3">
+        Guardar Cambios
+      </button>
+    </form>
+  </div>
+
+</div>
+
+<!-- ================= ESTILOS ================= -->
+<style>
+
+/* CONTENEDOR */
+.lux-edit-wrapper{
+  min-height: 70vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: 30px 15px;
+}
+
+/* CARD */
+.lux-edit-card{
+  width:100%;
+  max-width:480px;
+  background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:20px;
+  padding:30px 28px;
+  box-shadow:0 25px 70px rgba(0,0,0,0.55);
+}
+
+/* TITULOS */
+.lux-edit-title{
+  color:#f3d36b;
+  font-weight:900;
+  text-align:center;
+  margin-bottom:6px;
+}
+
+.lux-edit-subtitle{
+  text-align:center;
+  font-size:14px;
+  color: rgba(245,245,247,.65);
+  margin-bottom:22px;
+}
+
+/* FORM */
+.lux-form{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.lux-field label{
+  font-size:13px;
+  font-weight:800;
+  color: rgba(245,245,247,.75);
+  margin-bottom:4px;
+  display:block;
+}
+
+/* INPUT */
+.lux-input{
+  width:100%;
+  padding:11px 14px;
+  border-radius:14px;
+  background: rgba(0,0,0,0.30);
+  border:1px solid rgba(255,255,255,0.14);
+  color:#f5f5f7;
+  outline:none;
+}
+
+.lux-input:focus{
+  border-color: rgba(212,175,55,.55);
+  box-shadow:0 0 0 .2rem rgba(212,175,55,.12);
+}
+
+/* BOTON */
+.btn-lux{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  padding:12px;
+  border-radius:16px;
+  font-weight:900;
+  text-decoration:none;
+  transition:.2s ease;
+}
+
+.btn-lux-gold{
+  background: linear-gradient(90deg,#d4af37,#f3d36b);
+  color:#0b0c10;
+  border:none;
+}
+
+.btn-lux-gold:hover{
+  filter:brightness(1.05);
+  transform:translateY(-1px);
+}
+
+</style>
+
+{% endblock %}

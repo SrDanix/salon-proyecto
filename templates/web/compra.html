@@ -1,0 +1,387 @@
+
+{% extends "web/base.html" %}
+{% load static %}
+{% load formatos %}
+
+{% block title %}Compra{% endblock %}
+
+{% block content %}
+
+<div class="lux-shop-header mb-4">
+  <div>
+    <h2 class="lux-title mb-1">Compras</h2>
+    <p class="lux-subtitle mb-0">Elige tus productos y finaliza tu compra de forma segura.</p>
+  </div>
+</div>
+
+<div class="lux-compra-wrap">
+
+  <!-- === PRODUCTOS DISPONIBLES === -->
+  <section class="lux-panel productos">
+    <div class="lux-panel-head">
+      <h3 class="lux-h3 mb-0">Productos disponibles</h3>
+      <span class="lux-badge">Catálogo</span>
+    </div>
+
+    <div class="grid-productos">
+      {% for p in productos %}
+      <article class="producto-card">
+        <div class="producto-media">
+          <img src="{% static 'images/' %}{{ p.imagen }}" alt="{{ p.nombre }}">
+        </div>
+
+        <div class="producto-body">
+          <h4 class="producto-title">{{ p.nombre }}</h4>
+
+          <div class="producto-meta">
+            <div class="precio">${{ p.precio|precio_cl }}</div>
+
+            {% if p.stock > 0 %}
+              <div class="stock stock-ok">Stock: {{ p.stock }}</div>
+            {% else %}
+              <div class="stock stock-bad">Agotado</div>
+            {% endif %}
+          </div>
+
+          <div class="producto-actions">
+            {% if p.stock > 0 %}
+              <a href="?agregar={{ p.id }}" class="btn-lux btn-lux-gold">Agregar al carrito</a>
+            {% else %}
+              <button class="btn-lux btn-lux-disabled" disabled>No disponible</button>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- === CARRITO === -->
+  <aside class="lux-panel carrito">
+    <div class="lux-panel-head">
+      <h3 class="lux-h3 mb-0">Carrito</h3>
+      <span class="lux-badge">Resumen</span>
+    </div>
+
+    {% if productos_carrito %}
+      <div class="table-responsive lux-table-wrap">
+        <table class="tabla-carrito">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cant.</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in productos_carrito %}
+            <tr>
+              <td class="td-producto">{{ item.producto.nombre }}</td>
+              <td class="td-cant">{{ item.cantidad }}</td>
+              <td class="td-subtotal">${{ item.subtotal|precio_cl }}</td>
+              <td class="td-x">
+                <a href="?eliminar={{ item.producto.id }}" class="btn-x" aria-label="Eliminar">✕</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="lux-total">
+        <span>Total</span>
+        <strong>${{ total|precio_cl }}</strong>
+      </div>
+
+      <form method="post" class="mt-3">
+        {% csrf_token %}
+        <button type="submit" class="btn-lux btn-lux-gold w-100">Proceder al Pago</button>
+      </form>
+
+      <p class="lux-note mt-3 mb-0">Pago protegido • Confirmación inmediata</p>
+
+    {% else %}
+      <div class="lux-empty">
+        <div class="lux-empty-icon">🛒</div>
+        <p class="mb-0">Tu carrito está vacío.</p>
+        <small class="lux-muted">Agrega productos para continuar.</small>
+      </div>
+    {% endif %}
+  </aside>
+
+</div>
+
+<style>
+/* ====== LUX COMPRA (NEGRO / DORADO) ====== */
+.lux-shop-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:16px;
+}
+.lux-title{
+  color:#f5f5f7;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+.lux-subtitle{
+  color:rgba(245,245,247,.72);
+  max-width:60ch;
+}
+
+.lux-compra-wrap{
+  display:grid;
+  grid-template-columns: 1.6fr .9fr;
+  gap:22px;
+}
+
+.lux-panel{
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  overflow:hidden;
+}
+
+.lux-panel-head{
+  padding:16px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+}
+
+.lux-h3{
+  color:#f5f5f7;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+
+.lux-badge{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  color:#f3d36b;
+  border:1px solid rgba(212,175,55,.25);
+  background: rgba(212,175,55,.10);
+}
+
+/* GRID productos */
+.grid-productos{
+  padding:18px;
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:16px;
+}
+
+.producto-card{
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  background: rgba(0,0,0,0.25);
+  overflow:hidden;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.producto-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(212,175,55,.35);
+  background: rgba(255,255,255,0.06);
+}
+
+.producto-media{
+  padding:14px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  background: radial-gradient(420px 220px at 0% 0%, rgba(212,175,55,0.14), transparent 65%);
+}
+
+.producto-media img{
+  width:100%;
+  height:160px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,.45));
+}
+
+.producto-body{
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.producto-title{
+  margin:0;
+  color:#f5f5f7;
+  font-weight:900;
+  font-size:15px;
+  line-height:1.2;
+  min-height: 36px;
+}
+
+.producto-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.precio{
+  color:#f3d36b;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+
+.stock{
+  font-size:12px;
+  font-weight:800;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.10);
+}
+
+.stock-ok{
+  color:#b8ffca;
+  background: rgba(34,197,94,0.12);
+  border-color: rgba(34,197,94,0.20);
+}
+
+.stock-bad{
+  color:#ffb4b4;
+  background: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.20);
+}
+
+.producto-actions{
+  margin-top: 2px;
+}
+
+/* botones */
+.btn-lux{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  font-weight:900;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,0.12);
+  transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.btn-lux:hover{ transform: translateY(-1px); }
+
+.btn-lux-gold{
+  color:#0b0c10;
+  background: linear-gradient(90deg, #d4af37, #f3d36b);
+  border-color: rgba(212,175,55,.55);
+}
+
+.btn-lux-gold:hover{ filter: brightness(1.05); }
+
+.btn-lux-disabled{
+  color: rgba(245,245,247,.55);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.10);
+  cursor:not-allowed;
+}
+
+/* carrito */
+.carrito{ padding-bottom: 14px; }
+
+.lux-table-wrap{ padding: 14px 18px 0 18px; }
+
+.tabla-carrito{
+  width:100%;
+  border-collapse: collapse;
+  overflow:hidden;
+  border-radius:14px;
+}
+
+.tabla-carrito thead th{
+  text-align:center;
+  padding:10px 8px;
+  font-size:12px;
+  letter-spacing:.3px;
+  text-transform:uppercase;
+  color: rgba(245,245,247,.75);
+  background: rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.tabla-carrito td{
+  padding:10px 8px;
+  text-align:center;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: rgba(245,245,247,.85);
+}
+
+.td-producto{ text-align:left !important; font-weight:800; }
+.td-subtotal{ color:#f3d36b; font-weight:900; }
+
+.btn-x{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  background: rgba(239,68,68,0.14);
+  border:1px solid rgba(239,68,68,0.25);
+  color:#ffd0d0;
+  text-decoration:none;
+  font-weight:900;
+  transition: transform .18s ease, filter .18s ease;
+}
+.btn-x:hover{ transform: scale(1.03); filter: brightness(1.05); }
+
+.lux-total{
+  margin: 14px 18px 0 18px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(212,175,55,.25);
+  background: rgba(212,175,55,.10);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#f5f5f7;
+  font-weight:900;
+}
+
+.lux-note{
+  padding: 0 18px;
+  color: rgba(245,245,247,.65);
+  font-size: 12px;
+}
+
+/* carrito vacío */
+.lux-empty{
+  margin: 16px 18px 0 18px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px dashed rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.03);
+  text-align:center;
+}
+.lux-empty-icon{
+  font-size:28px;
+  margin-bottom:8px;
+}
+.lux-muted{ color: rgba(245,245,247,.65); }
+
+/* responsive */
+@media (max-width: 1200px){
+  .grid-productos{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 992px){
+  .lux-compra-wrap{ grid-template-columns: 1fr; }
+  .grid-productos{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 576px){
+  .grid-productos{ grid-template-columns: 1fr; }
+}
+</style>
+
+{% endblock %}

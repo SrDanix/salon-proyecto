@@ -1,0 +1,216 @@
+{% extends "web/base.html" %}
+{% load formatos %}
+{% block title %}Elegir horario{% endblock %}
+
+{% block content %}
+
+<div class="lux-horario-header mb-3">
+  <div>
+    <h2 class="lux-title mb-1">
+      Disponibilidad – {{ servicio.nombre }}
+    </h2>
+    <p class="lux-subtitle mb-0">
+      Precio: <span class="lux-price">${{ servicio.precio|precio_cl }}</span>
+    </p>
+  </div>
+</div>
+
+<!-- PANEL FECHA -->
+<div class="lux-panel mb-4">
+  <form method="GET" class="lux-form">
+    <div class="lux-form-row">
+      <label class="lux-label">Selecciona una fecha</label>
+      <input type="date"
+             name="fecha"
+             value="{{ fecha_seleccionada }}"
+             required
+             class="lux-input">
+      <button type="submit" class="btn-lux btn-lux-gold">
+        Buscar
+      </button>
+    </div>
+    <div class="lux-hint">
+      Tip: elige una fecha para ver los horarios disponibles.
+    </div>
+  </form>
+</div>
+
+<!-- TABLA HORARIOS -->
+{% if horarios %}
+<div class="lux-panel">
+  <div class="table-responsive">
+    <table class="table lux-table lux-table-dark mb-0">
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th>Estado</th>
+          <th class="text-end">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for h in horarios %}
+        <tr>
+          <td class="td-hora">{{ h.hora }}</td>
+          <td>
+            {% if h.disponible %}
+              <span class="lux-pill lux-pill-ok">{{ h.estado }}</span>
+            {% else %}
+              <span class="lux-pill lux-pill-bad">{{ h.estado }}</span>
+            {% endif %}
+          </td>
+          <td class="text-end">
+            {% if h.disponible %}
+              <a href="{% url 'confirmar_reserva' servicio.id %}?fecha={{ fecha_seleccionada }}&hora={{ h.hora }}"
+                 class="btn-lux btn-lux-gold btn-sm-lux">
+                Seleccionar
+              </a>
+            {% else %}
+              <span class="lux-muted">—</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% else %}
+<div class="lux-panel lux-empty">
+  <div class="lux-empty-icon">📅</div>
+  <p class="mb-0">Selecciona una fecha para ver horarios.</p>
+  <small class="lux-muted">
+    Si no aparecen resultados, no hay horarios cargados.
+  </small>
+</div>
+{% endif %}
+
+<!-- ================= ESTILOS ================= -->
+<style>
+
+/* TITULOS */
+.lux-title{
+  color:#f5f5f7;
+  font-weight:900;
+}
+.lux-subtitle{
+  color:rgba(245,245,247,.72);
+}
+.lux-price{
+  color:#f3d36b;
+  font-weight:900;
+}
+
+/* PANEL */
+.lux-panel{
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  overflow:hidden;
+}
+
+/* FORM */
+.lux-form{ padding:16px 18px; }
+.lux-form-row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.lux-label{
+  color: rgba(245,245,247,.75);
+  font-weight:800;
+  width:180px;
+}
+.lux-input{
+  flex:1;
+  padding:10px 12px;
+  border-radius:14px;
+  background: rgba(0,0,0,0.25);
+  border:1px solid rgba(255,255,255,0.14);
+  color:#f5f5f7;
+}
+.lux-input:focus{
+  border-color: rgba(212,175,55,.45);
+  box-shadow:0 0 0 .2rem rgba(212,175,55,.12);
+}
+.lux-hint{
+  margin-top:8px;
+  font-size:12px;
+  color: rgba(245,245,247,.6);
+}
+
+/* BOTONES */
+.btn-lux{
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:900;
+  text-decoration:none;
+}
+.btn-lux-gold{
+  background: linear-gradient(90deg,#d4af37,#f3d36b);
+  color:#0b0c10;
+  border:none;
+}
+.btn-sm-lux{
+  padding:7px 12px;
+  font-size:13px;
+}
+
+/* ===== FIX TABLA BLANCA BOOTSTRAP ===== */
+.lux-table-dark{
+  --bs-table-bg: transparent !important;
+  --bs-table-color: rgba(245,245,247,.88) !important;
+  --bs-table-striped-bg: rgba(255,255,255,.03) !important;
+  --bs-table-hover-bg: rgba(255,255,255,.05) !important;
+  --bs-table-border-color: rgba(255,255,255,.10) !important;
+}
+
+.lux-table-dark > :not(caption) > * > *{
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+/* TABLE */
+.lux-table thead th{
+  color: rgba(245,245,247,.75);
+  text-transform:uppercase;
+  font-size:12px;
+}
+.td-hora{
+  font-weight:900;
+  color:#f3d36b;
+}
+
+/* ESTADOS */
+.lux-pill{
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:12px;
+}
+.lux-pill-ok{
+  background: rgba(34,197,94,0.15);
+  color:#8ff0b6;
+}
+.lux-pill-bad{
+  background: rgba(239,68,68,0.15);
+  color:#ffb4b4;
+}
+
+/* EMPTY */
+.lux-empty{
+  padding:22px;
+  text-align:center;
+}
+.lux-empty-icon{
+  font-size:28px;
+}
+
+@media (max-width:576px){
+  .lux-label{ width:100%; }
+}
+
+</style>
+
+{% endblock %}

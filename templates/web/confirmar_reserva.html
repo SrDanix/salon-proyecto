@@ -1,0 +1,108 @@
+{% extends "web/base.html" %}
+{% load formatos %}
+{% block title %}Confirmar Reserva{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card reserva-card shadow-lg">
+
+        <div class="card-header text-center">
+            <h3 class="mb-0">Confirmar Reserva</h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="reserva-info">
+                <p><span>Servicio:</span> {{ servicio.nombre }}</p>
+                <p><span>Precio:</span> ${{ servicio.precio|precio_cl }}</p>
+                <p><span>Fecha:</span> {{ fecha }}</p>
+                <p><span>Hora:</span> {{ hora }}</p>
+            </div>
+
+            <hr class="divider">
+
+            <!-- PAGO STRIPE (NO SE TOCA) -->
+            <form action="{% url 'pago_reserva' servicio.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="fecha" value="{{ fecha }}">
+                <input type="hidden" name="hora" value="{{ hora }}">
+
+                <button type="submit" class="btn btn-gold w-100">
+                    💳 Pagar con Tarjeta
+                </button>
+            </form>
+
+            <a href="{% url 'horario' servicio.id %}" class="btn btn-outline-dark w-100 mt-3">
+                ← Volver
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<style>
+/* ===== TARJETA PRINCIPAL ===== */
+.reserva-card {
+    max-width: 450px;
+    width: 100%;
+    background: #111;
+    color: #f5f5f5;
+    border-radius: 14px;
+    border: none;
+}
+
+/* ===== HEADER ===== */
+.reserva-card .card-header {
+    background: linear-gradient(135deg, #c9a24d, #f2d27c);
+    color: #111;
+    border-radius: 14px 14px 0 0;
+    font-weight: bold;
+}
+
+/* ===== INFO ===== */
+.reserva-info p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.reserva-info span {
+    color: #c9a24d;
+    font-weight: 600;
+}
+
+/* ===== DIVISOR ===== */
+.divider {
+    border-color: rgba(255, 215, 150, 0.3);
+    margin: 20px 0;
+}
+
+/* ===== BOTÓN DORADO ===== */
+.btn-gold {
+    background: linear-gradient(135deg, #c9a24d, #f2d27c);
+    color: #111;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+    background: linear-gradient(135deg, #b8943e, #e6c267);
+    transform: translateY(-2px);
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.btn-outline-dark {
+    border-color: #c9a24d;
+    color: #c9a24d;
+}
+
+.btn-outline-dark:hover {
+    background: #c9a24d;
+    color: #111;
+}
+</style>
+
+{% endblock %}

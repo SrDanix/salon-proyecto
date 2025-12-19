@@ -1,0 +1,147 @@
+{% extends "web/base.html" %}
+{% load static %}
+{% load formatos %}
+
+{% block title %}Servicios{% endblock %}
+
+{% block content %}
+
+<div class="lux-serv-header mb-4 text-center">
+  <h2 class="lux-title mb-1">Nuestros Servicios</h2>
+  <p class="lux-subtitle mb-0">Elegancia, calidad y atención profesional en cada detalle.</p>
+</div>
+
+<div class="row g-4">
+  {% for s in servicios %}
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="lux-card h-100">
+
+      <div class="lux-card-media">
+        <img src="{% static 'images/' %}{{ s.imagen }}"
+             alt="{{ s.nombre }}">
+        <div class="lux-card-glow"></div>
+      </div>
+
+      <div class="lux-card-body text-center">
+        <h5 class="lux-card-title mb-1">{{ s.nombre }}</h5>
+        <div class="lux-price mb-3">${{ s.precio|precio_cl }}</div>
+
+        {% if user.is_authenticated %}
+          <a href="{% url 'reserva' %}" class="btn-lux btn-lux-gold w-100">Reservar</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn-lux btn-lux-outline w-100">Inicia sesión para reservar</a>
+        {% endif %}
+
+        <div class="lux-mini mt-3">Agenda rápida • Horarios disponibles</div>
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+/* ====== SERVICIOS LUX (NEGRO / DORADO) ====== */
+.lux-title{
+  color:#f5f5f7;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+.lux-subtitle{
+  color:rgba(245,245,247,.72);
+}
+
+.lux-card{
+  border-radius: 20px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  position:relative;
+}
+.lux-card:hover{
+  transform: translateY(-3px);
+  border-color: rgba(212,175,55,.35);
+  background: rgba(255,255,255,0.06);
+}
+
+.lux-card-media{
+  position:relative;
+  height: 230px;
+  background: #0b0c10;
+}
+.lux-card-media img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  filter: contrast(1.02) saturate(1.02);
+}
+.lux-card-glow{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(520px 260px at 0% 0%, rgba(212,175,55,0.18), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.55));
+  pointer-events:none;
+}
+
+.lux-card-body{
+  padding: 16px 16px 18px 16px;
+}
+
+.lux-card-title{
+  color:#f5f5f7;
+  font-weight:900;
+}
+
+.lux-price{
+  color:#f3d36b;
+  font-weight:900;
+  letter-spacing:.2px;
+  font-size: 16px;
+}
+
+.btn-lux{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 900;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,0.12);
+  transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease;
+}
+.btn-lux:hover{ transform: translateY(-1px); }
+
+.btn-lux-gold{
+  color:#0b0c10;
+  background: linear-gradient(90deg, #d4af37, #f3d36b);
+  border-color: rgba(212,175,55,.55);
+}
+.btn-lux-gold:hover{ filter: brightness(1.05); }
+
+.btn-lux-outline{
+  color:#f3d36b;
+  background: rgba(212,175,55,0.08);
+  border-color: rgba(212,175,55,0.28);
+}
+.btn-lux-outline:hover{
+  background: rgba(212,175,55,0.12);
+  filter: brightness(1.03);
+}
+
+.lux-mini{
+  font-size: 12px;
+  color: rgba(245,245,247,.65);
+}
+
+/* responsive */
+@media (max-width: 576px){
+  .lux-card-media{ height: 210px; }
+}
+</style>
+
+{% endblock %}

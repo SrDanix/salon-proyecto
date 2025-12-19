@@ -1,0 +1,214 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/lux.css' %}">
+
+<!-- ================= HERO PRINCIPAL CON CAROUSEL ================= -->
+<section class="hero-lux position-relative overflow-hidden">
+
+  <!-- Carousel Bootstrap -->
+  <div id="heroCarousel"
+       class="carousel slide carousel-fade position-absolute top-0 start-0 w-100 h-100"
+       data-bs-ride="carousel"
+       data-bs-interval="5000"
+       data-bs-pause="false">
+
+    <div class="carousel-inner h-100">
+
+      <div class="carousel-item active h-100">
+        <div class="hero-bg"
+             style="background-image:
+             linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+             url('{% static "images/servicio6.jpg" %}')">
+        </div>
+      </div>
+
+      <div class="carousel-item h-100">
+        <div class="hero-bg"
+             style="background-image:
+             linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+             url('{% static "images/servicio9.jpg" %}')">
+        </div>
+      </div>
+
+      <div class="carousel-item h-100">
+        <div class="hero-bg"
+            style="background-image:
+            linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+            url('{% static 'images/servicio12.jpg' %}')">
+        </div>
+      </div>
+
+        <div class="carousel-item h-100">
+          <div class="hero-bg"
+              style="background-image:
+              linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+              url('{% static 'images/servicio11.jpg' %}')">
+          </div>
+      </div>
+
+      <div class="carousel-item h-100">
+        <div class="hero-bg"
+            style="background-image:
+            linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+            url('{% static 'images/servicio2.jpg' %}')">
+        </div>
+      </div>
+
+      <div class="carousel-item h-100">
+        <div class="hero-bg"
+            style="background-image:
+            linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.85)),
+            url('{% static 'images/servicio16.jpg' %}')">
+        </div>
+    </div>
+
+
+    </div>
+  </div>
+
+  <!-- Texto encima -->
+  <div class="container position-relative d-flex align-items-center justify-content-center text-center"
+       style="min-height:70vh; z-index:2;">
+    <div>
+      <h1 class="hero-title">Salón de Belleza</h1>
+      <h1 class="hero-title">"San Miguel"</h1>
+      <p class="hero-subtitle">
+        Elegancia, estilo y cuidado profesional en un solo lugar.
+      </p>
+    </div>
+  </div>
+
+</section>
+<!-- ================= FIN HERO ================= -->
+
+
+{% block hero %}
+<section class="lux-hero">
+  <div class="container py-4 py-lg-5">
+    <div class="row align-items-center g-4">
+
+      <div class="col-lg-7">
+        <div class="lux-chip mb-3">✨ Experiencia premium</div>
+        <h1 class="lux-h1 mb-3">
+          Belleza con <span class="lux-gold">estilo</span> y elegancia
+        </h1>
+        <p class="lux-lead mb-4">
+          Reserva tu hora, revisa servicios y compra productos desde nuestra plataforma.
+        </p>
+
+        <div class="d-flex gap-2 flex-wrap">
+          {% if user.is_authenticated %}
+            <a class="btn lux-btn" href="{% url 'reserva' %}">Reservar ahora</a>
+            <a class="btn lux-btn-outline" href="{% url 'mi_perfil' %}">Ver mi perfil</a>
+          {% else %}
+            <a class="btn lux-btn" href="{% url 'servicios' %}">Ver servicios</a>
+            <a class="btn lux-btn-outline" href="{% url 'tienda' %}">Ir a tienda</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="lux-card lux-glow p-4">
+          <div class="d-flex align-items-center gap-3">
+            <img src="{% static 'images/logoo.png' %}" class="lux-hero-logo" alt="Logo">
+            <div>
+              <div class="lux-card-title">Salón San Miguel</div>
+              <div class="lux-muted">Cuidado, estética y atención de primera.</div>
+            </div>
+          </div>
+
+          <hr class="lux-hr my-4">
+
+          <div class="row g-3 text-center">
+            <div class="col-4">
+              <div class="lux-stat">+100</div>
+              <div class="lux-muted small">Clientes</div>
+            </div>
+            <div class="col-4">
+              <div class="lux-stat">Premium</div>
+              <div class="lux-muted small">Servicio</div>
+            </div>
+            <div class="col-4">
+              <div class="lux-stat">Online</div>
+              <div class="lux-muted small">Reservas</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+
+<section class="container mt-5">
+  <div class="row text-center">
+    <div class="col-md-4 mb-4">
+      <div class="info-card">
+        <h4>✨ Profesionales</h4>
+        <p>Nuestro equipo está compuesto por especialistas certificados.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="info-card">
+        <h4>✨ Experiencia Premium</h4>
+        <p>Ambiente moderno, elegante y relajante.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="info-card">
+        <h4>💳 Pago Seguro</h4>
+        <p>Pagos online 100% confiables.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ESTILOS ================= -->
+<style>
+.hero-lux{
+  min-height: 70vh;
+  position: relative;
+  color: #f5f5f5;
+}
+
+.hero-bg{
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.carousel,
+.carousel-inner,
+.carousel-item{
+  height: 100%;
+}
+
+.carousel-fade .carousel-item{
+  transition: opacity 1.2s ease-in-out;
+}
+
+.hero-title{
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #f3d36b;
+}
+
+.hero-subtitle{
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 15px auto 0;
+  opacity: .85;
+  color: #f5f5f5;
+}
+</style>
+
+{% endblock %}

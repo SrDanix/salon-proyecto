@@ -1,0 +1,190 @@
+{% extends "web/base.html" %}
+{% load formatos %}
+{% block title %}Mi Perfil{% endblock %}
+
+{% block content %}
+
+<div class="lux-profile-header mb-4">
+  <h2 class="lux-title mb-1">Mi Perfil</h2>
+  <p class="lux-subtitle mb-0">Gestiona tus datos, reservas y compras.</p>
+</div>
+
+<div class="row g-4">
+
+  <!-- ====================== DATOS DEL USUARIO ====================== -->
+  <div class="col-12 col-md-6">
+    <div class="lux-card h-100">
+      <h4 class="lux-card-title">Datos Personales</h4>
+
+      <div class="lux-info">
+        <p><span>Usuario</span>{{ user.username }}</p>
+        <p><span>Teléfono</span>{{ user.telefono }}</p>
+        <p><span>Email</span>{{ user.email }}</p>
+      </div>
+
+      <a href="{% url 'editar_perfil' %}" class="btn-lux btn-lux-gold w-100 mt-2">
+        Editar Datos
+      </a>
+
+      <a href="{% url 'cambiar_contrasena' %}" class="btn-lux btn-lux-outline w-100 mt-2">
+        Cambiar Contraseña
+      </a>
+    </div>
+  </div>
+
+  <!-- ====================== RESERVA ====================== -->
+  <div class="col-12 col-md-6">
+    <div class="lux-card h-100">
+      <h4 class="lux-card-title">Mi Reserva</h4>
+
+      {% if reserva %}
+        <div class="lux-info">
+          <p><span>Servicio</span>{{ reserva.servicio.nombre }}</p>
+          <p><span>Fecha</span>{{ reserva.fecha }}</p>
+          <p><span>Hora</span>{{ reserva.hora }}</p>
+        </div>
+      {% else %}
+        <p class="lux-muted">No tienes reservas activas.</p>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+<hr class="lux-divider my-4">
+
+<!-- ====================== COMPRAS ====================== -->
+<h3 class="lux-section-title mb-3">Mis Compras</h3>
+
+{% if compras %}
+  {% for compra in compras %}
+    <div class="lux-card mb-3">
+      <div class="lux-compra-head">
+        <p><b>Fecha:</b> {{ compra.fecha }}</p>
+        <p class="lux-total">Total: ${{ compra.total|precio_cl }}</p>
+      </div>
+
+      <ul class="lux-compra-list">
+        {% for item in compra.items.all %}
+        <li>
+          <span>{{ item.producto.nombre }} (x{{ item.cantidad }})</span>
+          <span>${{ item.subtotal|precio_cl }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+{% else %}
+  <p class="lux-muted">No tienes compras realizadas.</p>
+{% endif %}
+
+<style>
+/* ====== PERFIL LUX (NEGRO / DORADO) ====== */
+
+.lux-title{
+  color:#f5f5f7;
+  font-weight:900;
+}
+
+.lux-subtitle{
+  color:rgba(245,245,247,.7);
+}
+
+.lux-section-title{
+  color:#f5f5f7;
+  font-weight:900;
+}
+
+.lux-divider{
+  border-color: rgba(255,255,255,0.12);
+}
+
+/* cards */
+.lux-card{
+  background: rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius: 20px;
+  padding:18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+
+.lux-card-title{
+  color:#f3d36b;
+  font-weight:900;
+  margin-bottom:14px;
+}
+
+/* info */
+.lux-info p{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  color:#f5f5f7;
+  font-weight:600;
+}
+.lux-info span{
+  color:rgba(245,245,247,.65);
+  font-weight:700;
+}
+
+/* compras */
+.lux-compra-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.lux-total{
+  color:#f3d36b;
+  font-weight:900;
+}
+
+.lux-compra-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.lux-compra-list li{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  color:#f5f5f7;
+  font-size:14px;
+}
+.lux-compra-list li:last-child{
+  border-bottom:none;
+}
+
+/* buttons */
+.btn-lux{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  padding:10px 14px;
+  border-radius:14px;
+  font-weight:900;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,0.12);
+  transition:.2s;
+}
+.btn-lux:hover{ transform: translateY(-1px); }
+
+.btn-lux-gold{
+  background: linear-gradient(90deg,#d4af37,#f3d36b);
+  color:#0b0c10;
+  border-color: rgba(212,175,55,.55);
+}
+
+.btn-lux-outline{
+  background: rgba(212,175,55,0.08);
+  color:#f3d36b;
+  border-color: rgba(212,175,55,.28);
+}
+
+.lux-muted{
+  color:rgba(245,245,247,.6);
+}
+</style>
+
+{% endblock %}

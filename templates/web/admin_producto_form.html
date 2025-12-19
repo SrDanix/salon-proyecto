@@ -1,0 +1,203 @@
+{% extends "web/base.html" %}
+{% block title %}Producto{% endblock %}
+
+{% block content %}
+
+<div class="lux-form-wrap">
+
+  <div class="lux-form-card">
+
+    <div class="lux-form-head">
+      <h2 class="lux-form-title mb-1">
+        {% if modo == "crear" %}
+          Crear Producto
+        {% else %}
+          Editar Producto
+        {% endif %}
+      </h2>
+      <p class="lux-form-subtitle mb-0">
+        Completa la información del producto para mostrarlo en la tienda.
+      </p>
+    </div>
+
+    <form method="POST" class="lux-form-body">
+      {% csrf_token %}
+
+      <div class="lux-grid">
+        <div class="lux-field">
+          <label>Nombre</label>
+          <input type="text" name="nombre" class="lux-input" required
+                 value="{{ producto.nombre|default:'' }}">
+        </div>
+
+        <div class="lux-field lux-span-2">
+          <label>Descripción</label>
+          <textarea name="descripcion" class="lux-input lux-textarea" rows="3">{{ producto.descripcion|default:'' }}</textarea>
+        </div>
+
+        <div class="lux-field">
+          <label>Precio</label>
+          <input type="number" name="precio" class="lux-input" required
+                 value="{{ producto.precio|default:'' }}">
+        </div>
+
+        <div class="lux-field">
+          <label>Stock</label>
+          <input type="number" name="stock" class="lux-input" required
+                 value="{{ producto.stock|default:'' }}">
+        </div>
+
+        <div class="lux-field lux-span-2">
+          <label>Imagen (nombre de archivo)</label>
+          <input type="text" name="imagen" class="lux-input"
+                 value="{{ producto.imagen|default:'' }}">
+          <small class="lux-help">
+            Ejemplo: <b>producto1.jpg</b> (debe existir en <b>static/images/</b>)
+          </small>
+        </div>
+      </div>
+
+      <div class="lux-actions">
+        <button class="btn-lux btn-lux-gold" type="submit">Guardar</button>
+        <a href="{% url 'admin_productos' %}" class="btn-lux btn-lux-outline">Volver</a>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+<style>
+/* ====== FORM ADMIN LUX (NEGRO / DORADO) ====== */
+
+.lux-form-wrap{
+  min-height: 70vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding: 26px 14px;
+}
+
+.lux-form-card{
+  width:100%;
+  max-width: 760px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  box-shadow: 0 25px 75px rgba(0,0,0,0.55);
+  overflow:hidden;
+}
+
+.lux-form-head{
+  padding: 22px 22px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0));
+}
+
+.lux-form-title{
+  color:#f3d36b;
+  font-weight: 900;
+  letter-spacing:.2px;
+}
+
+.lux-form-subtitle{
+  color: rgba(245,245,247,.65);
+  font-size: 14px;
+}
+
+.lux-form-body{
+  padding: 18px 22px 22px;
+}
+
+.lux-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.lux-span-2{
+  grid-column: span 2;
+}
+
+.lux-field label{
+  display:block;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(245,245,247,.75);
+  margin-bottom: 6px;
+}
+
+.lux-input{
+  width:100%;
+  padding: 11px 14px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(255,255,255,0.14);
+  color:#f5f5f7;
+  outline:none;
+}
+
+.lux-textarea{
+  resize: vertical;
+  min-height: 92px;
+}
+
+.lux-input:focus{
+  border-color: rgba(212,175,55,.55);
+  box-shadow: 0 0 0 .2rem rgba(212,175,55,.12);
+}
+
+.lux-help{
+  display:block;
+  margin-top: 6px;
+  color: rgba(245,245,247,.55);
+  font-size: 12px;
+}
+
+.lux-actions{
+  display:flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.btn-lux{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-weight: 900;
+  text-decoration:none;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform .18s ease, filter .18s ease, background .18s ease;
+}
+
+.btn-lux:hover{ transform: translateY(-1px); }
+
+.btn-lux-gold{
+  color:#0b0c10;
+  background: linear-gradient(90deg,#d4af37,#f3d36b);
+  border-color: rgba(212,175,55,.55);
+}
+
+.btn-lux-gold:hover{ filter: brightness(1.05); }
+
+.btn-lux-outline{
+  color:#f3d36b;
+  background: transparent;
+  border-color: rgba(212,175,55,.35);
+}
+
+.btn-lux-outline:hover{
+  background: rgba(212,175,55,0.10);
+}
+
+@media (max-width: 576px){
+  .lux-grid{ grid-template-columns: 1fr; }
+  .lux-span-2{ grid-column: span 1; }
+}
+</style>
+
+{% endblock %}

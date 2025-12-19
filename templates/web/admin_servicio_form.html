@@ -1,0 +1,128 @@
+{% extends "web/base.html" %}
+{% block title %}{{ modo|capfirst }} Servicio{% endblock %}
+
+{% block content %}
+
+<div class="lux-admin-container">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="lux-title">{{ modo|capfirst }} Servicio</h2>
+    </div>
+
+    <!-- FORM PANEL -->
+    <div class="lux-panel">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="lux-label">Nombre</label>
+                <input type="text"
+                       name="nombre"
+                       class="form-control lux-input"
+                       value="{{ servicio.nombre|default:'' }}"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="lux-label">Precio</label>
+                <input type="number"
+                       name="precio"
+                       class="form-control lux-input"
+                       value="{{ servicio.precio|default:'' }}"
+                       required>
+            </div>
+
+            <div class="mb-4">
+                <label class="lux-label">Imagen (texto o URL)</label>
+                <input type="text"
+                       name="imagen"
+                       class="form-control lux-input"
+                       value="{{ servicio.imagen|default:'' }}">
+            </div>
+
+            <div class="d-flex gap-2">
+                <button class="btn lux-btn-gold">
+                    {{ modo|capfirst }} Servicio
+                </button>
+
+                <a href="{% url 'admin_servicios' %}" class="btn lux-btn-outline">
+                    Cancelar
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<style>
+/* ===== ADMIN SERVICIOS LUX ===== */
+
+.lux-admin-container{
+    max-width: 700px;
+    margin: auto;
+}
+
+.lux-title{
+    color:#f5f5f7;
+    font-weight:900;
+}
+
+/* PANEL */
+.lux-panel{
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius:18px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.55);
+    padding: 28px;
+}
+
+/* LABELS */
+.lux-label{
+    color: rgba(245,245,247,.75);
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:.2px;
+    margin-bottom:6px;
+}
+
+/* INPUTS */
+.lux-input{
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #f5f5f7;
+    border-radius: 14px;
+    padding: 10px 12px;
+}
+
+.lux-input:focus{
+    background: rgba(0,0,0,0.45);
+    border-color: rgba(212,175,55,.55);
+    box-shadow: 0 0 0 .2rem rgba(212,175,55,.15);
+    color:#fff;
+}
+
+/* BOTONES */
+.lux-btn-gold{
+    background: linear-gradient(135deg,#d4af37,#f3d36b);
+    color:#111;
+    font-weight:900;
+    border-radius:14px;
+    padding:10px 22px;
+    border:none;
+}
+
+.lux-btn-outline{
+    border:1px solid rgba(212,175,55,0.45);
+    color:#f3d36b;
+    background: rgba(0,0,0,0.25);
+    border-radius:14px;
+    font-weight:800;
+    padding:10px 22px;
+}
+</style>
+
+{% endblock %}
