@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-9vt9(ki1k5om4r3q89^@1#7ima@6py@$rib-djfm#m^2&d9+!!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'axes.middleware.AxesMiddleware', #aqui esta el axesmiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -141,9 +142,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'webApp.Usuario'
 
-
-STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "")
-STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "")
+STRIPE_PUBLIC_KEY = 'pk_test_51SYgRz1dRxkj6GP3KcXVvDzx7wIf6Fzux0iRGJsCarVaXXO5SEaAIEXLTaTJ6QKE5PcINpFOMuCMmNFsVQ4MSF5w00SBPVRwD4'
+STRIPE_SECRET_KEY = 'sk_test_51SYgRz1dRxkj6GP3dGkgH4jMyliXsaa4CSXs3jpN6OGH8EI6n9SsJXiq9tmKEvjVJGFyHvVrG4DIhiigy1GtRkcQ00XquxzCxZ'
 
 
 #autenticacion para evitar errores con el axes
